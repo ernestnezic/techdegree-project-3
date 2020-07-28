@@ -1,0 +1,1 @@
+console.log('index.html and script.js files are connected!');
