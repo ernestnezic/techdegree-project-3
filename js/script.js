@@ -37,6 +37,7 @@
 //
 
 
+
 /******************************************************
  * UPDATES UPPON LAUNCHING
  ******************************************************/
@@ -47,22 +48,26 @@
     //Hides the 'other' text field upon launching
     otherTitle.style.display = 'none';
 
+    //Creating and apending the default ($0) total cost element
     const totalCostDisplay = document.createElement('h2');
     totalCostDisplay.textContent = 'TOTAL: $0';
     activitiesSelector.appendChild(totalCostDisplay);
 
+    //Hiding the bitcoin and the paypal div by default
     bitcoinDiv.hidden = true;
     paypalDiv.hidden = true;
     
+    //Hidding the color div by default
     colorDiv.hidden = true;
-
 //
+
 
 
 /******************************************************
  * FUNCTIONS
  ******************************************************/
 
+    //Showing the 'Other' text input field if the selected value of the option is 'other'
     function jobRoleHandler( trigger ) {
         if ( trigger === 'other' ) {
             otherTitle.style.display = 'block';
@@ -72,6 +77,7 @@
     }
 
 
+    //Setting the default option of 'color selection' to 'please select t-shirt theme' and hiding all of the other options
     function tshirtSection() {
         const selectOptionElement = document.createElement('option');
         selectOptionElement.value = 'selecttshirt';
@@ -83,11 +89,13 @@
         colorSelector.value = ''
         colorSelector.insertBefore(selectOptionElement, colorSelector.firstElementChild);
     }
+    //Removing the 'select theme' option if there is one
     function updateDesignPanel () {
         if (designOptions[0].textContent === 'Select Theme') {
             designSelector.removeChild(designSelector.firstElementChild);
         }
     }
+    //Updating the 'color selection' based on the design selected by the trigger (event target element)
     function updateColorPanel ( trigger ) {  
         if (colorOptions[0].value === 'selecttshirt') {
             colorSelector.removeChild(colorSelector.firstElementChild);
@@ -113,7 +121,7 @@
     }
     
 
-
+    //Displaying the total price and not letting the user select 2 events happening at the same time by disabling checkboxes
     function activityHandler ( trigger ) {
         const checkboxes = activitiesSelector.querySelectorAll('input');
         if (trigger.checked === true) {
@@ -138,6 +146,7 @@
     }
 
 
+    //Removing the 'select method' element and displaying the selected payment method panel with the 'credit card' being the default
     function paymentHandler( trigger ) {   
         if (paymentSelector.firstElementChild.value === 'select method') {
         paymentSelector.removeChild(paymentSelector[0]);
@@ -168,137 +177,135 @@
  * VALIDATION FUNCTIONS
  ******************************************************/
 
-function nameValidation () {
-    const nameRequirement = /^\w+/;
-    return  nameRequirement.test(nameInput.value);
-}
-function emailValidation () {
-    const emailRequirement = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
-    const testValue = emailRequirement.test(emailInput.value);
-    
-    if(!testValue) {
-        emailInput.style.borderColor = 'red';
-        finalVal = false;
+    //Validating the name
+    function nameValidation () {
+        const nameRequirement = /^\w+/;
+        return  nameRequirement.test(nameInput.value);
+    }
+    //Validating the email live with different error messages appearing based on the error type
+    function emailValidation () {
         const emailRequirement = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
+        const testValue = emailRequirement.test(emailInput.value);
         
-        try {
-            document.getElementsByClassName('emptyFieldWarning')[0].parentNode.removeChild(document.getElementsByClassName('emptyFieldWarning')[0])
-        } catch {
-            console.log('error');
+        
+        if(!testValue) {
+            finalVal = false;
+            emailInput.style.borderColor = 'red';
+            const emailRequirement = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
+            
+            try {
+                document.getElementsByClassName('emptyFieldWarning')[0].parentNode.removeChild(document.getElementsByClassName('emptyFieldWarning')[0])
+            } catch {
+                console.log('error');
+            }
+
+            const emptyFieldWarning = document.createElement('h3');
+            emptyFieldWarning.className = 'emptyFieldWarning';
+            emptyFieldWarning.style.color = 'red';
+
+            if (emailInput.value == '' || emailInput.value == null) {
+                emptyFieldWarning.textContent = 'Please enter your email!'; 
+
+            } else if (!emailRequirement.test(emailInput.value)) {
+                emptyFieldWarning.textContent = 'Please enter a valid email (example@abc.de)!';
+            }
+
+            emailInput.parentNode.insertBefore(emptyFieldWarning, emailInput.nextSibling);
+
+        } else {
+            emailInput.style.borderColor = currentBorderColor;
+            try {
+                document.getElementsByClassName('emptyFieldWarning')[0].parentNode.removeChild(document.getElementsByClassName('emptyFieldWarning')[0])
+            } catch {
+                console.log('error');
+            }
         }
-
-        const emptyFieldWarning = document.createElement('h3');
-        emptyFieldWarning.className = 'emptyFieldWarning';
-        emptyFieldWarning.style.color = 'red';
-
-        if (emailInput.value == '' || emailInput.value == null) {
-            emptyFieldWarning.textContent = 'Please enter your email!'; 
-
-        } else if (!emailRequirement.test(emailInput.value)) {
-            emptyFieldWarning.textContent = 'Please enter a valid email (example@abc.de)!';
+        return testValue;
+    }
+    //Validating the activity
+    function activityValidation () {
+        let condition = false;
+        for ( let i = 0; i < activities.length; i ++) {
+            if (activities[i].checked) {
+                condition = true;
+            }
         }
+        return condition;
+    }
 
-        emailInput.parentNode.insertBefore(emptyFieldWarning, emailInput.nextSibling);
 
+    //Validating the credit card number
+    function creditCardNumValidation () {
+    const creditCardRequirement = /^[0-9]{13,16}$/;
+
+    if (creditCardRequirement.test(creditCardInput.value)) {
+        return true;
     } else {
-        emailInput.style.borderColor = currentBorderColor;
-        try {
-            document.getElementsByClassName('emptyFieldWarning')[0].parentNode.removeChild(document.getElementsByClassName('emptyFieldWarning')[0])
-        } catch {
-            console.log('error');
-        }
+        return false;
     }
-    return testValue;
-}
-function activityValidation () {
-    let condition = false;
-    for ( let i = 0; i < activities.length; i ++) {
-        if (activities[i].checked) {
-            condition = true;
-        }
     }
-    return condition;
-}
-
-
-//Regex source: https://stackoverflow.com/questions/40775674/credit-card-input-validation-using-regular-expression-in-javascript
-function creditCardNumValidation () {
-  const visaRegEx = /^(?:4[0-9]{12}(?:[0-9]{3})?)$/;
-  const mastercardRegEx = /^(?:5[1-5][0-9]{14})$/;
-  const amexpRegEx = /^(?:3[47][0-9]{13})$/;
-  const discovRegEx = /^(?:6(?:011|5[0-9][0-9])[0-9]{12})$/;
-
-  if (visaRegEx.test(creditCardInput.value)) {
-    return true;
-  } else if(mastercardRegEx.test(creditCardInput.value)) {
-    return true;
-  } else if(amexpRegEx.test(creditCardInput.value)) {
-    return true;
-  } else if(discovRegEx.test(creditCardInput.value)) {
-    return true;
-  } else {
-      return false;
-  }
-}
-//Regex source: http://zparacha.com/validate-zip-code-using-javascript-regular-expression
-function zipCodeValidation () {
-    const zipCodeRequirement = /^\d{5}$|^\d{5}-\d{4}$/;
-    return zipCodeRequirement.test(zipCodeInput.value);
-}
-function cvvValidation () {
-    const cvvRequirement = /^[0-9]{3,4}$/;
-    return cvvRequirement.test(cvvInput.value);
-}
-
-
-
-
-function finalValidation () {
-    let finalVal = true;
-    if (!nameValidation()) {
-        nameInput.style.borderColor = 'red';
-        finalVal = false;
-    } else {
-        nameInput.style.borderColor = currentBorderColor;
+    //Validating the zip code
+    //Regex source: http://zparacha.com/validate-zip-code-using-javascript-regular-expression
+    function zipCodeValidation () {
+        const zipCodeRequirement = /^\d{5}$|^\d{5}-\d{4}$/;
+        return zipCodeRequirement.test(zipCodeInput.value);
+    }
+    //Validating the cvv
+    function cvvValidation () {
+        const cvvRequirement = /^[0-9]{3,4}$/;
+        return cvvRequirement.test(cvvInput.value);
     }
 
-    if (!emailValidation) {
-        finalVal = false;
-    }
 
-    if (!activityValidation()) {
-        activitiesSelector.style.border = 'solid red';
-        activitiesSelector.style.paddingLeft = '5px';
-        finalVal = false;
-    } else {
-        activitiesSelector.style.border = '';
-        activitiesSelector.style.paddingLeft = '';
-    }
-
-    if (creditCardSelected) {
-        if (!creditCardNumValidation()) {
-            creditCardInput.style.borderColor = 'red';
+    //Making sure that all the requirements are met before submiting the form, indicating the error fields
+    function finalValidation () {
+        let finalVal = true;
+        if (!nameValidation()) {
+            nameInput.style.borderColor = 'red';
             finalVal = false;
         } else {
-            creditCardInput.style.borderColor = currentBorderColor;
+            nameInput.style.borderColor = currentBorderColor;
         }
 
-        if (!zipCodeValidation()) {
-            zipCodeInput.style.borderColor = 'red';
+        if (!emailValidation()) {
             finalVal = false;
-        } else {
-            zipCodeInput.style.borderColor = currentBorderColor;
+            emailInput.style.borderColor = 'red';
         }
 
-        if (!cvvValidation()) {
-            cvvInput.style.borderColor = 'red';
+        if (!activityValidation()) {
+            activitiesSelector.style.border = 'solid red';
+            activitiesSelector.style.paddingLeft = '5px';
             finalVal = false;
         } else {
-            cvvInput.style.borderColor = currentBorderColor;
+            activitiesSelector.style.border = '';
+            activitiesSelector.style.paddingLeft = '';
         }
+
+        if (creditCardSelected) {
+            if (!creditCardNumValidation()) {
+                creditCardInput.style.borderColor = 'red';
+                finalVal = false;
+            } else {
+                creditCardInput.style.borderColor = currentBorderColor;
+            }
+
+            if (!zipCodeValidation()) {
+                zipCodeInput.style.borderColor = 'red';
+                finalVal = false;
+            } else {
+                zipCodeInput.style.borderColor = currentBorderColor;
+            }
+
+            if (!cvvValidation()) {
+                cvvInput.style.borderColor = 'red';
+                finalVal = false;
+            } else {
+                cvvInput.style.borderColor = currentBorderColor;
+            }
+        }
+        return finalVal;
     }
-    return finalVal;
-}
+//
 
 
 
@@ -306,15 +313,18 @@ function finalValidation () {
  * EVENT LISTENERS
  ******************************************************/
 
+    //Listens for changes in the 'jobTitle' options menu and calls on the 'jobRoleHandler' method with the value of the event target
     jobTitle.addEventListener('change', (e) => {
         jobRoleHandler(e.target.value);
     })
 
-    emailInput.addEventListener('keyup', (e) => {
-        console.log(emailValidation());
+    //Listenes for input from when user starts typing and calls on the 'emailValidation' method each time a key is inputed
+    emailInput.addEventListener('keyup', () => {
+        emailValidation();
         
     })
     
+    //Listens for change in the design pannel, shows the color panel  and calls on the 'updateColorPanel' and 'updateDesignPanel' methods
     designPanel.addEventListener('change', (e) => {
         updateColorPanel(e.target.value);
         colorDiv.hidden = false;
@@ -322,22 +332,24 @@ function finalValidation () {
 
     })
 
+    //Listens for change in the activity panel and calls the 'activityHandler' method with event target
     activitiesSelector.addEventListener('change', (e) => {
         activityHandler(e.target);
     });
 
+    //Listens for change in the payment section and calls the 'paymentHandler' method with current event target's value
     paymentSelector.addEventListener('change', (e) =>{
         paymentHandler(e.target.value);
     })
 
+    //Listens for the form submition event and prevents the form from submiting if the 'finalValidation' method returns 'false'
     form.addEventListener('submit', (e) => {
-        
         if (!finalValidation()) {
             e.preventDefault();
-        } else {
-          console.log(' ');  
-    }});
+        } 
+    });
 //
+
 
 
 /******************************************************
