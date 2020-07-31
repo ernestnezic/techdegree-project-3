@@ -12,6 +12,7 @@
     const designSelector = designOptions[0].parentNode;
     const colorOptions = document.getElementById('color').children;
     const colorSelector = colorOptions[0].parentNode;
+    const colorDiv = document.getElementById('colors-js-puns');
 
     const activitiesSelector = document.getElementsByClassName('activities')[0];
     const activities = activitiesSelector.querySelectorAll('input');
@@ -52,6 +53,8 @@
 
     bitcoinDiv.hidden = true;
     paypalDiv.hidden = true;
+    
+    colorDiv.hidden = true;
 
 //
 
@@ -276,7 +279,9 @@ function finalValidation () {
     
     designPanel.addEventListener('change', (e) => {
         updateColorPanel(e.target.value);
+        colorDiv.hidden = false;
         updateDesignPanel();
+
     })
 
     activitiesSelector.addEventListener('change', (e) => {
