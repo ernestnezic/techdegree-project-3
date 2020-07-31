@@ -229,8 +229,34 @@ function finalValidation () {
     if(!emailValidation()) {
         emailInput.style.borderColor = 'red';
         finalVal = false;
+        const emailRequirement = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
+        
+        try {
+            document.getElementsByClassName('emptyFieldWarning')[0].parentNode.removeChild(document.getElementsByClassName('emptyFieldWarning')[0])
+        } catch {
+            console.log('error');
+        }
+
+        const emptyFieldWarning = document.createElement('h3');
+        emptyFieldWarning.className = 'emptyFieldWarning';
+        emptyFieldWarning.style.color = 'red';
+
+        if (emailInput.value == '' || emailInput.value == null) {
+            emptyFieldWarning.textContent = 'Please enter your email!'; 
+
+        } else if (!emailRequirement.test(emailInput.value)) {
+            emptyFieldWarning.textContent = 'Please enter a valid email (example@abc.de)!';
+        }
+
+        emailInput.parentNode.insertBefore(emptyFieldWarning, emailInput.nextSibling);
+
     } else {
         emailInput.style.borderColor = currentBorderColor;
+        try {
+            document.getElementsByClassName('emptyFieldWarning')[0].parentNode.removeChild(document.getElementsByClassName('emptyFieldWarning')[0])
+        } catch {
+            console.log('error');
+        }
     }
 
     if (!activityValidation()) {
